@@ -19,7 +19,7 @@ status("Downloading Stuff")
 component.invoke(gpu,"set",(x/2)-(string.len("sussyOS Installer")/2),(y/2)-2,"sussyOS Installer")
 loadbar(10)
 local a = 10
-wait(1)
+wait(3)
 function require(wot)
     if network then
         status("Downloading : "..wot..".lua")
@@ -38,10 +38,13 @@ function require(wot)
         end
 
        handle.close()
-       return load(result, "="..wot)
+       return result, reason
     end
 end
-local gui = require("GUI")
+function getResult(v1,v2)
+    return v1
+end
+local gui = load(getResult(require("GUI")), "=gui")
 gui:set(component)
 gui.Text("this is a sussy text, dont ask.", 1, 1)
 
