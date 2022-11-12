@@ -15,7 +15,7 @@ local paired = ""
 local status = ""
 local network,screen,gpu = component.proxy(component.list("internet")() or error("failure (component not found : INTERNET CARD)")),component.list("screen")(),component.list("gpu")()
 local resX, resY = boot_invoke(gpu,"getResolution")
-boot_invoke(gpu, "setForeground", 0xDCDCDC)
+boot_invoke(gpu, "setForeground", 0xA3A3A3)
 boot_invoke(gpu, "setBackground", 0xF3F3F3)
 component.proxy(component.list("eeprom")() or error("get an bios/uefi man"))
 computer.getBootAddress = function()
