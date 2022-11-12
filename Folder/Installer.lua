@@ -91,7 +91,6 @@ end
 function getResult(v1,v2)
     return v1
 end
-component.invoke(gpu,"set",1,1,require("GUI"))
 wait(1)
 download("GUI")
 local gui = require('GUI')
