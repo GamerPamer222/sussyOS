@@ -1,6 +1,9 @@
+--credits to mineos / tho i made the bios lol
 local gpu = component.list("gpu")()
 local x,y = component.invoke(gpu,"getResolution")
 local network = component.proxy(component.list("internet")())
+local installerPath = "/sussyOS/"
+temporaryFilesystemProxy = component.proxy(component.list("filesystem")())
 local repository = "https://raw.githubusercontent.com/GamerPamer222/sussyOS/main/"
 component.invoke(gpu,"fill",1,1,x,y," ")
 function status(text)
@@ -12,7 +15,7 @@ function wait(seconds)
     repeat until os.clock() >= start + seconds
 end
 function loadbar(val)
-    local width = 36
+    local width = 15
     component.invoke(gpu,"fill",width/2,y/2,math.ceil(width * val/100),1,"-")
 end
 status("Downloading Stuff")
@@ -20,33 +23,78 @@ component.invoke(gpu,"set",(x/2)-(string.len("sussyOS Installer")/2),(y/2)-2,"su
 loadbar(10)
 local a = 10
 wait(3)
-function require(wot)
-    if network then
-        status("Downloading : "..wot..".lua")
-        loadbar(a+5)
-        a = a + 5
-        local result, reason = ""
-        local handle, chunk = network.request(repository.."/lib/"..wot..".lua")
-        while true do
-            chunk = handle.read(math.huge)
+local function rawRequest(url, chunkHandler)
+	local internetHandle, reason = component.invoke(network, "request", repository .. url, function(char)
+		return string.format("%%%02X", string.byte(char))
+	end))
 
-            if chunk then
-                result = result .. chunk
-            else
-                break
-            end
-        end
+	if internetHandle then
+		local chunk, reason
+		while true do
+			chunk, reason = internetHandle.read(math.huge)	
+			
+			if chunk then
+				chunkHandler(chunk)
+			else
+				if reason then
+					error("Internet request failed: " .. tostring(reason))
+				end
 
-       handle.close()
-       return result, reason
+				break
+			end
+		end
+
+		internetHandle.close()
+	else
+		error("Connection failed: " .. url)
+	end
+end
+
+local function request(url)
+	local data = ""
+	
+	rawRequest(url, function(chunk)
+		data = data .. chunk
+	end)
+
+	return data
+end
+
+function download(module)
+    local a,b = temporaryFilesystemProxy.open(installerPath.."libs/"..module..".lua", "wb")
+    if a then
+        temporaryFilesystemProxy.write(a, request(repository.."lib/"..module..".lua"))
+        temporaryFilesystemProxy.close(a)
     end
+end
+
+function require(module)
+        local yes
+		local handle, reason = temporaryFilesystemProxy.open(installerPath .. "libs/" .. module .. ".lua", "rb")
+		if handle then
+			local data, chunk = ""
+			repeat
+				chunk = temporaryFilesystemProxy.read(handle, math.huge)
+				data = data .. (chunk or "")
+			until not chunk
+
+			temporaryFilesystemProxy.close(handle)
+			
+			local result, reason = load(data, "=" .. module)
+			if result then
+				yes = result() or true
+			end
+		end
+
+		return yes
 end
 function getResult(v1,v2)
     return v1
 end
 component.invoke(gpu,"set",1,1,require("GUI"))
-wait(20)
-local gui = load(getResult(require("GUI")), "=gui")
+wait(1)
+download("GUI")
+local gui = require('GUI')
 gui:set(component)
 gui.Text("this is a sussy text, dont ask.", 1, 1)
 
