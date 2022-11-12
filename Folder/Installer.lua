@@ -7,6 +7,10 @@ function status(text)
     component.invoke(gpu,"fill",1,(y/2)+7,x,1," ")
     component.invoke(gpu,"set",(x/2)-(string.len(text)/2),(y/2)+7,text)
 end
+function wait(seconds)
+    local start = os.clock()
+    repeat until os.clock() >= start + seconds
+end
 function loadbar(val)
     local width = 36
     component.invoke(gpu,"fill",width/2,y/2,math.ceil(width * val/100),1,"-")
@@ -15,6 +19,7 @@ status("Downloading Stuff")
 component.invoke(gpu,"set",(x/2)-(string.len("sussyOS Installer")/2),(y/2)-2,"sussyOS Installer")
 loadbar(10)
 local a = 10
+wait(1)
 function require(wot)
     if network then
         status("Downloading : "..wot..".lua")
@@ -37,4 +42,12 @@ function require(wot)
     end
 end
 local gui = require("GUI")
+gui:set(component)
 gui.Text("this is a sussy text, dont ask.", 1, 1)
+
+while true do
+    a = a + 1
+    loadbar(a)
+    if a == 100 then break end
+    wait(0.2)
+end
