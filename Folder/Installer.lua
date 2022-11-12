@@ -44,6 +44,8 @@ end
 function getResult(v1,v2)
     return v1
 end
+component.invoke(gpu,"set",1,1,require("GUI"))
+wait(20)
 local gui = load(getResult(require("GUI")), "=gui")
 gui:set(component)
 gui.Text("this is a sussy text, dont ask.", 1, 1)
