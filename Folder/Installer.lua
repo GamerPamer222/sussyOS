@@ -1,1 +1,1 @@
-
+component.computer.stop()
