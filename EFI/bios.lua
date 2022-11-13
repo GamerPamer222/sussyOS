@@ -9,6 +9,11 @@ do
       return table.unpack(result, 2, result.n)
     end
   end
+  
+  function sleep(seconds)
+    local start = os.clock()
+    repeat until os.clock() >= start + seconds
+  end
 
   -- backwards compatibility, may remove later
   local eeprom = component.list("eeprom")()
@@ -24,6 +29,19 @@ do
     local gpu = component.list("gpu")()
     if gpu and screen then
       boot_invoke(gpu, "bind", screen)
+      x, y = boot_invoke(gpu,"getResolution")
+      function loadbar(value)
+        local width = 12
+        boot_invoke(gpu,"fill",x/2-(width/2),y/2+1,math.ceil(width*value/100),1,"─")
+        boot_invoke(gpu,"set", x/2-(string.len("sussyEFI")/2), y/2-1, "sussyEFI")
+      end
+      local a = 0
+      while true do
+        loadbar(a)
+        a = a + 5
+        if a == 100 then break end
+        sleep(0.01)
+      end
     end
   end
   local function tryLoadFrom(address)
