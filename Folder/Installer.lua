@@ -65,15 +65,9 @@ end
 
 function require(module)
         local yes
-		local handle, reason = download(module)
+		local handle = download(module)
 		if handle then
-			local data, chunk = ""
-			repeat
-				chunk = handle
-				data = data .. (chunk or "")
-			until not chunk
-			
-			local result, reason = load(data, "=" .. module)
+			local result, reason = load(handle, "=" .. module)
 			if result then
 				yes = result() or true
 			end
