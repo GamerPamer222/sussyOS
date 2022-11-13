@@ -42,8 +42,8 @@ do
       end
       local a = 0
       while true do
-        local _, xA, xB = st.pullSignal(0.01)
-        if xA == component.list("keyboard")() and xB == (19 or 0) then
+        local _, xA, xB = st.pullSignal(0.05)
+        if xA == component.list("keyboard")() then
           st.stop()  
         end
         loadbar(a)
