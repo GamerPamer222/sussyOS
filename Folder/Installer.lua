@@ -78,9 +78,10 @@ end
 function getResult(v1,v2)
     return v1
 end
-local gui = require('GUI')()
-gui:set(component)
-gui.Text("this is a sussy text, dont ask.", 1, 1)
+local gui = require('GUI')
+component.invoke(gpu,"set",1,1,tostring(gui))
+--gui:set(component)
+--gui.Text("this is a sussy text, dont ask.", 1, 1)
 
 while true do
     a = a + 1
