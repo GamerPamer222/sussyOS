@@ -63,8 +63,9 @@ end
 function download(module)
     local a,b = temporaryFilesystemProxy.open(installerPath.."libs/"..module..".lua", "wb")
     if a then
-        temporaryFilesystemProxy.write(a, request(repository.."lib/"..module..".lua"))
-        temporaryFilesystemProxy.close(a)
+	local bb = request(repository.."lib/"..module..".lua")
+        temporaryFilesystemProxy.write(a, bb)
+        temporaryFilesystemProxy.close(a) return bb
     end
 end
 
@@ -91,8 +92,7 @@ end
 function getResult(v1,v2)
     return v1
 end
-download("GUI")
-component.invoke(gpu, "set", 1, 1, require("GUI"))
+component.invoke(gpu, "set", 1, 1, download("GUI"))
 wait(5)
 local gui = require('GUI')()
 gui:set(component)
