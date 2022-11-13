@@ -78,8 +78,6 @@ end
 function getResult(v1,v2)
     return v1
 end
-component.invoke(gpu, "set", 1, 1, require("GUI")())
-wait(5)
 local gui = require('GUI')()
 gui:set(component)
 gui.Text("this is a sussy text, dont ask.", 1, 1)
