@@ -44,9 +44,9 @@ do
       local a = 0
       while true do
         if sk then
-          if sk.isAltDown() then
-            st.stop()  
-          end
+          --if sk.isAltDown() then
+            --st.stop()  
+          --end
         end
         loadbar(a)
         a = a + 5
