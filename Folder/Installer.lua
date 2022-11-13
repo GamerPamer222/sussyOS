@@ -1,7 +1,7 @@
 --credits to mineos / tho i made the bios lol
 local gpu = component.list("gpu")()
 local x,y = component.invoke(gpu,"getResolution")
-local network = component.proxy(component.list("internet")())
+local network = component.list("internet")()
 local installerPath = "/sussyOS/"
 temporaryFilesystemProxy = component.proxy(component.list("filesystem")())
 local repository = "https://raw.githubusercontent.com/GamerPamer222/sussyOS/main/"
