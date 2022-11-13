@@ -20,7 +20,7 @@ function loadbar(val)
 end
 status("Downloading Stuff")
 component.invoke(gpu,"set",(x/2)-(string.len("sussyOS Installer")/2),(y/2)-2,"sussyOS Installer")
-loadbar(10)
+loadbar(100)
 local a = 10
 wait(3)
 local function rawRequest(url, chunkHandler)
