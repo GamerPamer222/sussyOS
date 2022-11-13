@@ -23,24 +23,36 @@ do
   computer.setBootAddress = function(address)
     return boot_invoke(eeprom, "setData", address)
   end
-
+  function status()
+    
+  end
   do
     local screen = component.list("screen")()
     local gpu = component.list("gpu")()
+    local st = component.proxy(component.list("computer")())
+    local sk = component.proxy(component.list("keyboard")())
     if gpu and screen then
       boot_invoke(gpu, "bind", screen)
       x, y = boot_invoke(gpu,"getResolution")
+      boot_invoke(gpu,"fill",1,1,x,y," ")
       function loadbar(value)
         local width = 12
         boot_invoke(gpu,"fill",x/2-(width/2),y/2+1,math.ceil(width*value/100),1,"─")
         boot_invoke(gpu,"set", x/2-(string.len("sussyEFI")/2), y/2-1, "sussyEFI")
+        if sk then boot_invoke(gpu,"set", x/2-(string.len("Press Alt to shutdown")), y-2, tostring(computer.pullSignal)) end
       end
       local a = 0
       while true do
+        if sk then
+          if sk.isAltDown() then
+            st.stop()  
+          end
+        end
         loadbar(a)
         a = a + 5
         if a == 100 then break end
-        sleep(0.01)
+        status(a)
+        sleep(0.020)
       end
     end
   end
