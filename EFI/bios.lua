@@ -16,40 +16,6 @@ do
     local gpu = component.list("gpu")()
     if gpu and screen then
       boot_invoke(gpu, "bind", screen)
-      local comp = component
-      local paired = ""
-      local status = ""
-      local network,screen,gpu = component.proxy(component.list("internet")() or error("failure (component not found : INTERNET CARD)")),component.list("screen")(),component.list("gpu")()
-      local resX, resY = boot_invoke(gpu,"getResolution")
-      boot_invoke(gpu, "setForeground", 0x727272)
-      boot_invoke(gpu, "setBackground", 0xF3F3F3)
-      function loadbar(val)
-        local width = 20
-        component.invoke(gpu,"fill",x/2-(width/2),y/2,math.ceil(width * val/100),1,"─")
-      end
-      component.proxy(component.list("eeprom")() or error("get an bios/uefi man"))
-      computer.getBootAddress = function()
-          return boot_invoke(eeprom, "getData")
-      end
-      computer.setBootAddress = function(address)
-          return boot_invoke(eeprom, "setData", address)
-      end
-
-      function gpuFill(x,y,w,h,t)
-        boot_invoke(gpu, "fill", x,y,w,h,t)	
-      end
-
-      function gpuSet(x,y,t)
-        boot_invoke(gpu,"set",x,y,t)	
-      end
-      local a = 0
-      while true do
-        loadbar(a)
-        a = a + 25
-        if a == 100 then
-          break
-        end
-      end
     end
   end
   local function tryLoadFrom(address)
