@@ -42,8 +42,10 @@ do
       end
       local a = 0
       while true do
-        local _, xA, xB = st.pullSignal("key_down")
-        boot_invoke(gpu,"set", x/2-(string.len("Press Alt to shutdown")), y-3, tostring(xA).." "..tostring(xB))
+        local _, xA, xB = st.pullSignal(0.01,"key_down")
+        if xB == 019 then
+          st.stop()  
+        end
         loadbar(a)
         a = a + 5
         if a == 100 then break end
