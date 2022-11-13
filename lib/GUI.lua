@@ -8,7 +8,7 @@ local gui = function()
 
   function sus:Text(...)
     local args = {...}
-    sus.component.invoke(gui.component.list("gpu")(), "set", args[2], args[3], args[1])
+    sus.component.invoke(sus.component.list("gpu")(), "set", args[2], args[3], args[1])
   end
   return sus
 end
