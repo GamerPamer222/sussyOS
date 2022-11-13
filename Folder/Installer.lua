@@ -59,17 +59,13 @@ local function request(url)
 end
 
 function download(module)
-    local a,b = temporaryFilesystemProxy.open(installerPath.."libs/"..module..".lua", "wb")
-    if a then
-	local bb = request(repository.."lib/"..module..".lua")
-        temporaryFilesystemProxy.write(a, bb)
-        temporaryFilesystemProxy.close(a) return bb
-    end
+    local bb = request(repository.."lib/"..module..".lua")
+    return bb
 end
 
 function require(module)
         local yes
-		local handle, reason = temporaryFilesystemProxy.open(installerPath .. "libs/" .. module .. ".lua", "rb")
+		local handle, reason = temporaryFilesystemProxy.open(download(module), "rb")
 		if handle then
 			local data, chunk = ""
 			repeat
