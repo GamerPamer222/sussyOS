@@ -15,12 +15,12 @@ function wait(seconds)
     repeat until os.clock() >= start + seconds
 end
 function loadbar(val)
-    local width = 8
+    local width = 15
     component.invoke(gpu,"fill",x/2-(width/2),y/2,math.ceil(width * val/100),1,"─")
 end
 status("Downloading Stuff")
 component.invoke(gpu,"set",(x/2)-(string.len("sussyOS Installer")/2),(y/2)-2,"sussyOS Installer")
-loadbar(100)
+loadbar(10)
 local a = 10
 wait(3)
 local function rawRequest(url, chunkHandler)
