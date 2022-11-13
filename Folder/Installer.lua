@@ -15,8 +15,8 @@ function wait(seconds)
     repeat until os.clock() >= start + seconds
 end
 function loadbar(val)
-    local width = 7
-    component.invoke(gpu,"fill",width/2,y/2,math.ceil(width * val/100),1,"─")
+    local width = 8
+    component.invoke(gpu,"fill",x/2-(width/2),y/2,math.ceil(width * val/100),1,"─")
 end
 status("Downloading Stuff")
 component.invoke(gpu,"set",(x/2)-(string.len("sussyOS Installer")/2),(y/2)-2,"sussyOS Installer")
@@ -91,8 +91,9 @@ end
 function getResult(v1,v2)
     return v1
 end
-wait(1)
 download("GUI")
+component.invoke(gpu, "set", 1, 1, require("GUI")
+wait(5)
 local gui = require('GUI')()
 gui:set(component)
 gui.Text("this is a sussy text, dont ask.", 1, 1)
