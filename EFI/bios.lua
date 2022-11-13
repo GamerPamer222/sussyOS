@@ -38,12 +38,12 @@ do
         local width = 12
         boot_invoke(gpu,"fill",x/2-(width/2),y/2+1,math.ceil(width*value/100),1,"─")
         boot_invoke(gpu,"set", x/2-(string.len("sussyEFI")/2), y/2-1, "sussyEFI")
-        boot_invoke(gpu,"set", x/2-(string.len("Press Alt to shutdown")), y-2, "Press Alt to shutdown")
+        boot_invoke(gpu,"set", x/2-(string.len("Press a key to shutdown")), y-2, "Press a key to shutdown")
       end
       local a = 0
       while true do
-        local _, xA, xB = st.pullSignal(0.01,"key_down")
-        if xB == 019 then
+        local _, xA, xB = st.pullSignal(0.01)
+        if xA == component.list("keyboard")() and xB == (19 or 0) then
           st.stop()  
         end
         loadbar(a)
