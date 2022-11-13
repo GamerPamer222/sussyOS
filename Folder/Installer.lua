@@ -24,9 +24,7 @@ loadbar(100)
 local a = 10
 wait(3)
 local function rawRequest(url, chunkHandler)
-	local internetHandle, reason = component.invoke(network, "request", repository .. url, function(char)
-		return string.format("%%%02X", string.byte(char))
-	end)
+	local internetHandle, reason = component.invoke(network, "request", url)
 
 	if internetHandle then
 		local chunk, reason
