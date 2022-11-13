@@ -11,6 +11,14 @@ do
   end
 
   -- backwards compatibility, may remove later
+  local eeprom = component.list("eeprom")()
+  computer.getBootAddress = function()
+    return boot_invoke(eeprom, "getData")
+  end
+  computer.setBootAddress = function(address)
+    return boot_invoke(eeprom, "setData", address)
+  end
+
   do
     local screen = component.list("screen")()
     local gpu = component.list("gpu")()
@@ -51,6 +59,6 @@ do
   if not init then
     error("no bootable medium found" .. (reason and (": " .. tostring(reason)) or ""), 0)
   end
-  computer.beep(200, 0.2)
+  computer.beep(1000, 0.2)
 end
 return init()
