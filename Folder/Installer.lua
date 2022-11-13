@@ -86,7 +86,7 @@ end
 function getResult(v1,v2)
     return v1
 end
-component.invoke(gpu, "set", 1, 1, download("GUI"))
+component.invoke(gpu, "set", 1, 1, require("GUI").component)
 wait(5)
 local gui = require('GUI')()
 gui:set(component)
