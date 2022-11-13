@@ -38,15 +38,12 @@ do
         local width = 12
         boot_invoke(gpu,"fill",x/2-(width/2),y/2+1,math.ceil(width*value/100),1,"─")
         boot_invoke(gpu,"set", x/2-(string.len("sussyEFI")/2), y/2-1, "sussyEFI")
-        boot_invoke(gpu,"set", x/2-(string.len("Press Alt to shutdown")), y-2, tostring(computer.pullSignal))
+        boot_invoke(gpu,"set", x/2-(string.len("Press Alt to shutdown")), y-2, "Press Alt to shutdown")
       end
       local a = 0
       while true do
-        --if sk then
-          --if sk.isAltDown() then
-            --st.stop()  
-          --end
-        --end
+        local _, xA, xB = st.pullSignal("key_down")
+        boot_invoke(gpu,"set", x/2-(string.len("Press Alt to shutdown")), y-3, tostring(xA).." "..tostring(xB))
         loadbar(a)
         a = a + 5
         if a == 100 then break end
