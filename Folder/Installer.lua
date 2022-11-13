@@ -65,15 +65,13 @@ end
 
 function require(module)
         local yes
-		local handle, reason = temporaryFilesystemProxy.open(download(module), "rb")
+		local handle, reason = download(module)
 		if handle then
 			local data, chunk = ""
 			repeat
-				chunk = temporaryFilesystemProxy.read(handle, math.huge)
+				chunk = handle
 				data = data .. (chunk or "")
 			until not chunk
-
-			temporaryFilesystemProxy.close(handle)
 			
 			local result, reason = load(data, "=" .. module)
 			if result then
@@ -86,7 +84,7 @@ end
 function getResult(v1,v2)
     return v1
 end
-component.invoke(gpu, "set", 1, 1, tostring(require("GUI")().component))
+component.invoke(gpu, "set", 1, 1, require("GUI")())
 wait(5)
 local gui = require('GUI')()
 gui:set(component)
