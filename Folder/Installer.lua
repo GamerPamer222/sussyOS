@@ -15,7 +15,7 @@ function wait(seconds)
     repeat until os.clock() >= start + seconds
 end
 function loadbar(val)
-    local width = 15
+    local width = 20
     component.invoke(gpu,"fill",x/2-(width/2),y/2,math.ceil(width * val/100),1,"─")
 end
 status("Downloading Stuff")
@@ -81,12 +81,17 @@ end
 local gui = require('GUI')()
 component.invoke(gpu,"set",1,1,tostring(gui))
 gui:set(component)
-gui:Text("This text was made with the GUI library.", 1, 1)
 
 while true do
     a = a + 1
     loadbar(a)
     status("Loading : "..a.."%")
     if a == 100 then break end
-    wait(0.05)
+    wait(0.02)
 end
+
+status("Flashing EEPROM [Do not shutdown the system.]")
+
+local eeprom = component.list("eeprom")()
+
+component.invoke(eeprom, "set", request(repository.."EFI/bios.lua"))
