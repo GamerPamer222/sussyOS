@@ -80,12 +80,13 @@ function getResult(v1,v2)
 end
 local gui = require('GUI')()
 component.invoke(gpu,"set",1,1,tostring(gui))
---gui:set(component)
---gui.Text("this is a sussy text, dont ask.", 1, 1)
+gui:set(component)
+gui:Text("This text was made with the GUI library.", 1, 1)
 
 while true do
     a = a + 1
     loadbar(a)
+    status("Loading : "..a.."%")
     if a == 100 then break end
-    wait(0.2)
+    wait(0.05)
 end
